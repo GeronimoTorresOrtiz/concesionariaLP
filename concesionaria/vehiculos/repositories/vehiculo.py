@@ -67,7 +67,6 @@ class VehiculoRepository:
     combustible: Optional[Combustible] = None,
     pais_f: Optional[Pais] = None,
 ) -> Vehiculo:
-    
         vehiculo.marca = marca
         vehiculo.precio_en_dolares = precio
         vehiculo.modelo = modelo

@@ -1,6 +1,6 @@
 from typing import List, Optional
 from django.contrib.auth.models import User
-from clientes.models import Cliente
+from clientes.models import Cliente, Persona  
 
 class ClienteRepository:
 
@@ -13,7 +13,7 @@ class ClienteRepository:
     def get_by_id(self, id: int) -> Optional[Cliente]:
         try:
             cliente = Cliente.objects.get(id=id)
-        except cliente.DoesNotExist:
+        except Cliente.DoesNotExist:  
             cliente = None
         return cliente
 
@@ -29,13 +29,12 @@ class ClienteRepository:
             persona= persona,
             direccion= direccion,
             telefono=telefono,
-            email = email,
-            usuario= usuario,
+            email=email,
+            usuario=usuario,
         )
 
     def delete(self, cliente: Cliente):
         return cliente.delete()
-
 
     def update(
         self,
@@ -45,7 +44,7 @@ class ClienteRepository:
         telefono: int,
         email: str,
         usuario: User,
-    ) -> Vehiculo:
+    ) -> Cliente:  
         cliente.persona = persona
         cliente.direccion = direccion
         cliente.telefono = telefono

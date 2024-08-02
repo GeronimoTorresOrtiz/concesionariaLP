@@ -1,5 +1,91 @@
 from django.http import HttpResponse
+from django.shortcuts import redirect, render
 
-# Create your views here.
+from product.models import Category
+from product.repositories.product import ProductRepository
+
+repo = ProductRepository()
+
 def index(request):
     return HttpResponse("Vehiculos")
+
+def product_list(request):
+    productos = repo.get_all()
+    return render(
+        request,
+        'products/list.html',
+        dict(
+            products=productos
+        )
+    )
+
+def product_detail(request, id):
+    producto = repo.get_by_id(id=id)
+    return render(
+        request,
+        'products/detail.html',
+        {"product":producto}
+    )
+
+def product_delete(request, id):
+    producto = repo.get_by_id(id=id)
+    repo.delete(producto=producto)
+    return redirect('product_list')
+
+def product_update(request, id):
+    if request.method == "POST":
+        product = repo.get_by_id(id=id)
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        price = request.POST.get('price')
+        stock = request.POST.get('stock')
+        id_category = request.POST.get('id_category')
+        category = Category.objects.get(id=id_category)
+
+        repo.update(
+            producto=product,
+            nombre=name,
+            precio=price,
+            descripcion=description,
+            stock=stock,
+            categoria=category
+        )
+
+        return redirect('product_detail', product.id)
+
+    categorias = Category.objects.all()
+    return render(
+        request,
+        'products/update.html',
+        dict(
+            categories=categorias
+        )
+    )
+
+def product_create(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        price = request.POST.get('price')
+        stock = request.POST.get('stock')
+        id_category = request.POST.get('id_category')
+        category = Category.objects.get(id=id_category)
+
+        producto_nuevo = repo.create(
+            nombre=name,
+            descripcion=description,
+            precio=float(price),
+            cantidades=stock,
+            categoria=category
+        )
+        return redirect('product_detail', producto_nuevo.id)
+
+    # TODO: reemplazar esta linea por el repositorio de categorias
+    categorias = Category.objects.all()
+    return render (
+        request,
+        'products/create.html',
+        dict(
+            categories=categorias
+        )
+    )
