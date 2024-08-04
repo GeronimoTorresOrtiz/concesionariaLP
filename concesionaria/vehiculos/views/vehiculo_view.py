@@ -1,5 +1,5 @@
 # vehiculos/views.py
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from vehiculos.forms import VehiculoForm
 from vehiculos.repositories.vehiculo import VehiculoRepository
 from vehiculos.repositories.marca import MarcaRepository
@@ -71,6 +71,65 @@ def vehiculo_create(request):
         }
     )
 
+def vehiculo_update(request, id):
+    vehiculo = get_object_or_404(vehiculo_repo.get_all(), id=id)
+    
+    if request.method == 'POST':
+        form = VehiculoForm(request.POST, instance=vehiculo)
+        if form.is_valid():
+            # Guarda los objetos relacionados si aún no están guardados
+            marca_id = form.cleaned_data['marca'].id
+            modelo_id = form.cleaned_data['modelo'].id
+            combustible_id = form.cleaned_data['combustible'].id
+            pais_id = form.cleaned_data['pais_fabricacion'].id
+            
+            marca = marca_repo.get_by_id(marca_id)
+            modelo = modelo_repo.get_by_id(modelo_id)
+            combustible = combustible_repo.get_by_id(combustible_id)
+            pais_fabricacion = pais_repo.get_by_id(pais_id)
+            
+            vehiculo_nuevo = vehiculo_repo.update(
+                vehiculo=vehiculo,
+                marca=marca,
+                modelo=modelo,
+                cant_puertas=form.cleaned_data['cant_puertas'],
+                cilindrada=form.cleaned_data['cilindrada'],
+                combustible=combustible,
+                pais_f=pais_fabricacion,
+                precio=form.cleaned_data['precio_en_dolares'],
+            )
+            return redirect('vehiculo_lista')
+    else:
+        form = VehiculoForm(instance=vehiculo)
+    
+    marcas = marca_repo.get_all()  # Obtener todas las marcas
+    modelos = modelo_repo.get_all()  # Obtener todos los modelos
+    combustibles = combustible_repo.get_all()  # Obtener todos los combustibles
+    paises = pais_repo.get_all()  # Obtener todos los países
+    
+    return render(
+        request,
+        'vehiculos/update.html',
+        {
+            'form': form,
+            'marcas': marcas,
+            'modelos': modelos,
+            'combustibles': combustibles,
+            'paises': paises
+        }
+    )
+
+def vehiculo_comentarios(request, id):
+    vehiculo = vehiculo_repo.get_by_id(id)
+    comentarios = vehiculo.comentarios.all()
+    return render(
+        request,
+        'vehiculos/comentarios.html',
+        {
+            'vehiculo': vehiculo,
+            'comentarios': comentarios
+        }
+    )
 def index_view(request):
     return render(
         request,

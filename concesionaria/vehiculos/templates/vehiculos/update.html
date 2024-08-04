@@ -1,34 +1,60 @@
 {% extends "index/base.html" %}
 {% block content %}
 <div class="container mt-3">
-    <h2>Actualizar Producto</h2>
+    <h2>Actualizar Vehículo</h2>
     <form method="post">
         {% csrf_token %}
         <div class="form-group">
-            <label>Nombre</label>
-            <input type="text" name="name" class="form-control" value="{{ product.name }}" required>
-        </div>
-        <div class="form-group">
-            <label>Descripción</label>
-            <textarea name="description" class="form-control" value="{{ product.description }}">{{ product.description }}</textarea>
-        </div>
-        <div class="form-group">
-            <label>Precio</label>
-            <input type="number" step="0.01" name="price" class="form-control" value="{{ product.price }}" required>
-        </div>
-        <div class="form-group">
-            <label>Categoría</label>
-            <select name="id_category" class="form-control">
-                {% for category in categories %}
-                    <option value="{{ category.id }}" {% if category.id == product.category.id %} selected {% endif %}>
-                        {{ category.name }}
+            <label>Marca</label>
+            <select name="marca" class="form-control">
+                {% for marca in marcas %}
+                    <option value="{{ marca.id }}" {% if marca.id == form.instance.marca.id %} selected {% endif %}>
+                        {{ marca.name }}
                     </option>
                 {% endfor %}
             </select>
         </div>
         <div class="form-group">
-            <label>Stock</label>
-            <input type="number" name="stock" class="form-control" value="{{ product.stock }}">
+            <label>Modelo</label>
+            <select name="modelo" class="form-control">
+                {% for modelo in modelos %}
+                    <option value="{{ modelo.id }}" {% if modelo.id == form.instance.modelo.id %} selected {% endif %}>
+                        {{ modelo.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Cantidad de puertas</label>
+            <input type="number" step="1" name="cant_puertas" class="form-control" value="{{ form.instance.cant_puertas }}" required>
+        </div>
+        <div class="form-group">
+            <label>Cilindrada</label>
+            <input type="number" step="0.01" name="cilindrada" class="form-control" value="{{ form.instance.cilindrada }}" required>
+        </div>
+        <div class="form-group">
+            <label>Combustible</label>
+            <select name="combustible" class="form-control">
+                {% for combustible in combustibles %}
+                    <option value="{{ combustible.id }}" {% if combustible.id == form.instance.combustible.id %} selected {% endif %}>
+                        {{ combustible.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>País de fabricación</label>
+            <select name="pais_fabricacion" class="form-control">
+                {% for pais in paises %}
+                    <option value="{{ pais.id }}" {% if pais.id == form.instance.pais_fabricacion.id %} selected {% endif %}>
+                        {{ pais.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Precio en USD</label>
+            <input type="number" step="0.01" name="precio_en_dolares" class="form-control" value="{{ form.instance.precio_en_dolares }}" required>
         </div>
         <button type="submit" class="btn btn-primary">Actualizar</button>
     </form>

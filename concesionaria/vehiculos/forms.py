@@ -16,3 +16,11 @@ class VehiculoForm(forms.ModelForm):
         }
 
 
+class ComentarioForm(forms.ModelForm):
+    class Meta:
+        model = Comentario
+        fields = ['contenido', 'calificacion']
+        widgets = {
+            'contenido': forms.Textarea(attrs={'class': 'form-control  custom-class', 'rows': 4}),
+            'calificacion': forms.NumberInput(attrs={'class': 'form-control  custom-class', 'min': 0, 'max': 10}),
+        }
