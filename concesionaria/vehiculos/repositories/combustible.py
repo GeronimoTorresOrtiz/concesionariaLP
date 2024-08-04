@@ -1,10 +1,16 @@
-from typing import List
+from typing import List, Optional
 from vehiculos.models import Combustible
 
 class CombustibleRepository:
 
     def get_all(self) -> List[Combustible]:
         return Combustible.objects.all()
+        
+    def get_by_id(self, id: int) -> Optional[Combustible]:
+        try:
+            return Combustible.objects.get(id=id)
+        except Combustible.DoesNotExist:
+            return None
 
     def create(
         self,

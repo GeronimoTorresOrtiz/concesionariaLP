@@ -5,6 +5,13 @@ class ComentarioRepository:
 
     def get_all(self) -> List[Comentario]:
         return Comentario.objects.all()
+    
+        
+    def get_by_id(self, id: int) -> Optional[Comentario]:
+        try:
+            return Comentario.objects.get(id=id)
+        except Comentario.DoesNotExist:
+            return None
 
     def create(
         self,

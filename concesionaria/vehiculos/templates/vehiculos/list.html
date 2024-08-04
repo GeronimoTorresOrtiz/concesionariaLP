@@ -1,32 +1,34 @@
 {% extends "index/base.html" %}
 {% block content %}
 <div class="container mt-3">
-    <h2>Lista de Productos</h2>
-    <a href="{% url 'product_create' %}" class="btn btn-primary mb-3">Crear Producto</a>
+    <h2>Lista de vehiculos</h2>
+    <a href="{% url 'vehiculo_create' %}" class="btn btn-danger btn-sm">Crear</a>                    
+
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Precio</th>
-                <th>Categoría</th>
-                <th>Stock</th>
-                <th>Acciones</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Puertas</th>
+                <th>Cilindrada</th>
+                <th>Combustible</th>
+                <th>Pais de fabricacion</th>
+                <th>Precio USD</th>
             </tr>
         </thead>
         <tbody>
-            {% for product in products %}
+            {% for vehiculo in vehicles %}
             <tr>
-                <td>{{ product.name }}</td>
-                <td>{{ product.description }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.category.name }}</td>
-                <td>{{ product.stock }}</td>
+                <td>{{ vehiculo.marca.name }}</td>
+                <td>{{ vehiculo.modelo.name }}</td>
+                <td>{{ vehiculo.cant_puertas }}</td>
+                <td>{{ vehiculo.cilindrada }}</td>
+                <td>{{ vehiculo.combustible.name }}</td>
+                <td>{{ vehiculo.pais_fabricacion.name }}</td>
+                <td>{{ vehiculo.precio_en_dolares }}</td>
                 <td>
-                    <a href="{% url 'product_detail' product.id %}" class="btn btn-info btn-sm">Detalles</a>
-                    <a href="{% url 'product_update' product.id %}" class="btn btn-success btn-sm">Editar</a>
-                    <a href="{% url 'product_delete' product.id %}" class="btn btn-danger btn-sm">Eliminar</a>
-                </td>
+                    <a href="{% url 'vehiculo_delete' vehiculo.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                </td> 
             </tr>
             {% endfor %}
         </tbody>

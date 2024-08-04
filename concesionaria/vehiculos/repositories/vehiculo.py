@@ -1,3 +1,4 @@
+# vehiculos/repositories/vehiculo.py
 from typing import List, Optional
 from vehiculos.models import Vehiculo, Marca, Pais, Combustible, Modelo
 
@@ -43,7 +44,7 @@ class VehiculoRepository:
             combustible=combustible,
             pais_fabricacion=pais_f,
             cilindrada=cilindrada,
-            cant_puertas=cant_puertas,
+            cant_puertas=cant_puertas,  
         )
 
     def filter_by_marca(
@@ -55,18 +56,17 @@ class VehiculoRepository:
     def delete(self, vehiculo: Vehiculo):
         return vehiculo.delete()
 
-
     def update(
-    self,
-    vehiculo: Vehiculo,
-    marca: Marca,
-    precio: float,
-    cilindrada: float,
-    cant_puertas: int,
-    modelo: Optional[Modelo] = None,
-    combustible: Optional[Combustible] = None,
-    pais_f: Optional[Pais] = None,
-) -> Vehiculo:
+        self,
+        vehiculo: Vehiculo,
+        marca: Marca,
+        precio: float,
+        cilindrada: float,
+        cant_puertas: int,
+        modelo: Optional[Modelo] = None,
+        combustible: Optional[Combustible] = None,
+        pais_f: Optional[Pais] = None,
+    ) -> Vehiculo:
         vehiculo.marca = marca
         vehiculo.precio_en_dolares = precio
         vehiculo.modelo = modelo
@@ -77,4 +77,3 @@ class VehiculoRepository:
 
         vehiculo.save()
         return vehiculo
-

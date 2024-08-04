@@ -1,10 +1,19 @@
-from typing import List
+from typing import List, Optional
 from vehiculos.models import Modelo
 
 class ModeloRepository:
 
     def get_all(self) -> List[Modelo]:
         return Modelo.objects.all()
+    
+        
+    def get_by_id(self, id: int) -> Optional[Modelo]:
+        try:
+            return Modelo.objects.get(id=id)
+        except Modelo.DoesNotExist:
+            return None
+
+        
 
     def create(
         self,
