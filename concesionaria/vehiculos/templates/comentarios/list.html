@@ -1,12 +1,12 @@
-{% extends "index/base.html" %}
+{% extends "home/base.html" %}
 {% block content %}
 <div class="container mt-3">
-    <h2>Lista de Productos</h2>
+    <h2>Lista de Comentarios</h2>
     <a href="{% url 'product_create' %}" class="btn btn-primary mb-3">Crear Producto</a>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Nombre</th>
+                <th>Autho</th>
                 <th>Descripción</th>
                 <th>Precio</th>
                 <th>Categoría</th>

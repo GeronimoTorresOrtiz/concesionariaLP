@@ -1,5 +1,7 @@
 # vehiculos/views.py
 from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth.decorators import login_required
+
 from vehiculos.forms import VehiculoForm
 from vehiculos.repositories.vehiculo import VehiculoRepository
 from vehiculos.repositories.marca import MarcaRepository
@@ -70,7 +72,7 @@ def vehiculo_create(request):
             'paises': paises
         }
     )
-
+@login_required(login_url='login')
 def vehiculo_update(request, id):
     vehiculo = get_object_or_404(vehiculo_repo.get_all(), id=id)
     
@@ -129,9 +131,4 @@ def vehiculo_comentarios(request, id):
             'vehiculo': vehiculo,
             'comentarios': comentarios
         }
-    )
-def index_view(request):
-    return render(
-        request,
-        'index/index.html'
     )

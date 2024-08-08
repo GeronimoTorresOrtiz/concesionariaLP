@@ -1,4 +1,4 @@
-{% extends "index/base.html" %}
+{% extends "home/base.html" %}
 {% block content %}
 <div class="container mt-3">
     <h2>Lista de vehículos</h2>
@@ -28,9 +28,10 @@
                 <td>{{ vehiculo.pais_fabricacion.name }}</td>
                 <td>{{ vehiculo.precio_en_dolares }}</td>
                 <td>
-                    <a href="{% url 'vehiculo_update' vehiculo.id %}" class="btn btn-warning btn-sm">Editar</a> 
+                    <a href="{% url 'vehiculo_update' vehiculo.id %}" class="btn btn-warning btn-sm">Editar</a>
                     <a href="{% url 'vehiculo_delete' vehiculo.id %}" class="btn btn-danger btn-sm">Eliminar</a>
                     <a href="{% url 'comentario_lista' vehiculo.id %}" class="btn btn-info btn-sm">Ver Comentarios</a> 
+                    
                 </td> 
             </tr>
             {% endfor %}
