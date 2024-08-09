@@ -8,13 +8,16 @@ from vehiculos.repositories.vehiculo import VehiculoRepository
 comentario_repo = ComentarioRepository()
 vehiculo_repo = VehiculoRepository()
 
-@login_required
 def comentario_lista(request, vehiculo_id):
     vehiculo = get_object_or_404(vehiculo_repo.get_all(), id=vehiculo_id)
     comentarios = comentario_repo.get_all().filter(vehiculo=vehiculo)
+
+    if request.user.is_authenticated and not request.user.is_staff:
+         comentarios = comentario_repo.filter(autor=request.user)
+
     return render(
         request,
-        'vehiculos/comentarios.html',
+        'comentarios/list.html',
         {
             'vehiculo': vehiculo,
             'comentarios': comentarios
@@ -26,21 +29,28 @@ def comentario_create(request, vehiculo_id):
     vehiculo = get_object_or_404(Vehiculo, id=vehiculo_id)
 
     if request.method == 'POST':
+      
         form = ComentarioForm(request.POST)
         if form.is_valid():
-            comentario_repo.create(
-                autor=request.user,  # Assuming the author is the currently logged-in user
-                vehiculo=vehiculo,
-                contenido=form.cleaned_data['contenido'],
-                calificacion=form.cleaned_data['calificacion']
-            )
-            return redirect('comentario_lista', vehiculo_id=vehiculo_id)
+            try:
+                comentario_repo.create(
+                    autor=request.user, 
+                    vehiculo=vehiculo,
+                    contenido=form.cleaned_data['contenido'],
+                    calificacion=form.cleaned_data['calificacion']
+                )
+                # Redirigir a la lista de comentarios
+                return redirect('comentario_lista', vehiculo_id=vehiculo_id)
+            except Exception as e:
+                form.add_error(None, f"Ocurrió un error al guardar el comentario: {e}")
     else:
+        # Instanciar un formulario vacío
         form = ComentarioForm()
 
+    # Renderizar la plantilla con el formulario y el vehículo asociado
     return render(
         request,
-        'vehiculos/comentario_create.html',
+        'comentarios/create.html',
         {
             'form': form,
             'vehiculo': vehiculo
@@ -67,7 +77,7 @@ def comentario_update(request, comentario_id):
 
     return render(
         request,
-        'vehiculos/comentario_update.html',
+        'comentarios/update.html',
         {
             'form': form,
             'comentario': comentario

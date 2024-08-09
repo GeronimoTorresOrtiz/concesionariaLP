@@ -15,14 +15,14 @@ class VehiculoForm(forms.ModelForm):
             'precio_en_dolares': forms.NumberInput(attrs={'class': 'form-control  custom-class'}),
         }
 
-
 class ComentarioForm(forms.ModelForm):
     class Meta:
+        CALIFICACION_CHOICES = [(i, str(i)) for i in range(1, 6)]
         model = Comentario
         fields = ['contenido', 'calificacion']
         widgets = {
-            'contenido': forms.Textarea(attrs={'class': 'form-control  custom-class', 'rows': 4}),
-            'calificacion': forms.NumberInput(attrs={'class': 'form-control  custom-class', 'min': 0, 'max': 10}),
+            'contenido': forms.Textarea(attrs={'class': 'form-control custom-class', 'rows': 4}),
+            'calificacion': forms.Select(choices=CALIFICACION_CHOICES, attrs={'class': 'form-control custom-class'}),
         }
 
 class VehiculoImageForm(forms.ModelForm):

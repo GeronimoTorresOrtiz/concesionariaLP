@@ -1,35 +1,47 @@
 {% extends "home/base.html" %}
 {% block content %}
 <div class="container mt-3">
-    <h2>Lista de Comentarios</h2>
-    <a href="{% url 'product_create' %}" class="btn btn-primary mb-3">Crear Producto</a>
+    <h2>Comentarios de {{ vehiculo.marca }} {{ vehiculo.modelo }}</h2>
+
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Autho</th>
-                <th>Descripción</th>
-                <th>Precio</th>
-                <th>Categoría</th>
-                <th>Stock</th>
+                <th>Autor</th>
+                <th>Fecha</th>
+                <th>Calificación</th>
+                <th>Contenido</th>
+                {% if user.is_authenticated %}
                 <th>Acciones</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
-            {% for product in products %}
+            {% for comentario in comentarios %}
             <tr>
-                <td>{{ product.name }}</td>
-                <td>{{ product.description }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.category.name }}</td>
-                <td>{{ product.stock }}</td>
+                <td>{{ comentario.author }}</td>
+                <td>{{ comentario.fecha_creacion }}</td>
+                <td>{{ comentario.calificacion }}</td>
+                <td>{{ comentario.contenido }}</td>
                 <td>
-                    <a href="{% url 'product_detail' product.id %}" class="btn btn-info btn-sm">Detalles</a>
-                    <a href="{% url 'product_update' product.id %}" class="btn btn-success btn-sm">Editar</a>
-                    <a href="{% url 'product_delete' product.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                    <form action="{% url 'comentario_delete' comentario.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        {% if user.is_authenticated %}
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                            {% if not user.is_staff or comentario.author == user %}                              
+                                    <a href="{% url 'comentario_update' comentario.id %}" class="btn btn-warning btn-sm">Editar</a>
+                            {% endif %}
+                        {% endif %}
+                    </form>
                 </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No hay comentarios para este vehículo.</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    <a href="{% url 'vehiculo_lista' %}" class="btn btn-primary">Volver a la lista de vehículos</a>
 </div>
 {% endblock %}
