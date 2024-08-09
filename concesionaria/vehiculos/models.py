@@ -74,3 +74,16 @@ class Comentario(models.Model):
 
     def __str__(self):
         return f"Comentario de {self.author} sobre {self.vehiculo}"
+
+
+class VehiculoImage(models.Model):
+    vehiculo = models.ForeignKey(
+        Vehiculo,
+        on_delete=models.CASCADE,
+        related_name='imagenes'
+    )
+    image = models.ImageField(upload_to='vehiculo_images/' ,null=True)
+    
+
+    def __str__(self):
+        return f"Imagen de {self.vehiculo.marca}"

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Vehiculo, Marca, Modelo, Combustible, Pais, Comentario
+from .models import Vehiculo, Marca, Modelo, Combustible, Pais, Comentario, VehiculoImage
 
 class VehiculoForm(forms.ModelForm):
     class Meta:
@@ -24,3 +24,8 @@ class ComentarioForm(forms.ModelForm):
             'contenido': forms.Textarea(attrs={'class': 'form-control  custom-class', 'rows': 4}),
             'calificacion': forms.NumberInput(attrs={'class': 'form-control  custom-class', 'min': 0, 'max': 10}),
         }
+
+class VehiculoImageForm(forms.ModelForm):
+    class Meta:
+        model = VehiculoImage
+        fields = ['image',]

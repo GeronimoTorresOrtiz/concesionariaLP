@@ -8,6 +8,7 @@ from vehiculos.models import (
     Pais,
     Vehiculo,
     Comentario,
+    VehiculoImage,
     )
 
 @admin.register(Marca)
@@ -55,3 +56,11 @@ class ComentarioAdmin(admin.ModelAdmin):
         'fecha_creacion',
         'calificacion',
     )
+@admin.register(VehiculoImage)
+class VehiculoImageAdmin(admin.ModelAdmin):
+    list_display = (
+        'vehiculo',
+        'image',
+        
+    )
+
