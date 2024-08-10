@@ -74,7 +74,8 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.csrf',
                 'django.contrib.messages.context_processors.messages',
-                'vehiculos.context_processors.site_context',  # Nombre de módulo correcto
+                'vehiculos.context_processors.site_context',
+                'vehiculos.context_processors.lista_marcas_context'  # Nombre de módulo correcto
             ],
         },
     },

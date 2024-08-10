@@ -4,7 +4,15 @@
     <h2>Lista de vehículos</h2>
     <p>Hora actual: <span id="current-time">{{ current_time }}</span></p>  <!-- Muestra la hora actual -->
 
-    <a href="{% url 'vehiculo_create' %}" class="btn btn-danger btn-sm">Crear</a>                    
+    <a href="{% url 'vehiculo_create' %}" class="btn btn-danger btn-sm">Crear</a>  
+    
+    <!-- Selector de marca con JavaScript para filtrado -->
+    <select name="brand" id="brand-select" onchange="filterVehicles()">
+        <option value="">Selecciona una marca</option>
+        {% for marca in lista_marcas %}
+            <option value="{{ marca.id }}" {% if marca.id == selected_brand_id %}selected{% endif %}>{{ marca.name }}</option>
+        {% endfor %}
+    </select>                  
 
     <table class="table table-striped">
         <thead>
@@ -42,6 +50,14 @@
 </div>
 
 <script>
+    function filterVehicles() {
+        var select = document.getElementById('brand-select');
+        var selectedBrandId = select.value;
+        var url = new URL(window.location.href);
+        url.searchParams.set('brand', selectedBrandId);
+        window.location.href = url.href;
+    }
+
     function updateTime() {
         var now = new Date();
         var hours = now.getHours().toString().padStart(2, '0');
