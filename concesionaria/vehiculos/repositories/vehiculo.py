@@ -52,6 +52,10 @@ class VehiculoRepository:
         marca: Marca,
     ) -> List[Vehiculo]:
         return Vehiculo.objects.filter(marca=marca)
+    
+    def get_by_marca(self, marca_id: int) -> List[Vehiculo]:
+        return Vehiculo.objects.filter(marca_id=marca_id)
+
 
     def delete(self, vehiculo: Vehiculo):
         return vehiculo.delete()
