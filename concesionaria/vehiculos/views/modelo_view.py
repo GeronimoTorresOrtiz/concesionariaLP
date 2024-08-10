@@ -1,22 +1,21 @@
-from django.shortcuts import redirect, render
-
-from vehiculos.models import Modelo
+from django.shortcuts import render
+from django.views import View
 from vehiculos.repositories.modelo import ModeloRepository
 
 repo = ModeloRepository()
 
-def modelo_lista(request):
-    modelo = repo.get_all()
-    return render(
-        request,
-        'vehiculos/create.html',
-        dict(
-            modelos= modelo
+class ModeloListaView(View):
+    def get(self, request):
+        modelos = repo.get_all()
+        return render(
+            request,
+            'vehiculos/create.html',
+            {'modelos': modelos}
         )
-    )
 
-
-def index_view(request):
-    return render(
-        request,
-        'index/index.html'    )
+class IndexView(View):
+    def get(self, request):
+        return render(
+            request,
+            'index/index.html'
+        )

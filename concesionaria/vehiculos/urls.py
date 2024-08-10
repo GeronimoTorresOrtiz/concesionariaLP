@@ -1,28 +1,27 @@
 from django.urls import path
 from vehiculos.views.vehiculo_view import (
-    vehiculo_lista,
-    vehiculo_delete,
-    vehiculo_create,
-    vehiculo_update,
+    VehiculoListaView,
+    VehiculoDeleteView,
+    VehiculoCreateView,
+    VehiculoUpdateView,
 )
 from vehiculos.views.comentario_view import (
-    comentario_lista,
-    comentario_delete,
-    comentario_create,
-    comentario_update
+    ComentarioListaView,
+    ComentarioDeleteView,
+    ComentarioCreateView,
+    ComentarioUpdateView,
 )
-
 from vehiculos.views.vehiculo_image_view import VehiculoImageView
 
 urlpatterns = [
-    path(route="", view=vehiculo_lista, name='vehiculo_lista'),
-    path(route="create/", view=vehiculo_create, name='vehiculo_create'),
-    path(route="<int:id>/delete/", view=vehiculo_delete, name='vehiculo_delete'),
-    path(route="<int:id>/update/", view=vehiculo_update, name='vehiculo_update'),
+    path(route="", view=VehiculoListaView.as_view(), name='vehiculo_lista'),
+    path(route="create/", view=VehiculoCreateView.as_view(), name='vehiculo_create'),
+    path(route="<int:id>/delete/", view=VehiculoDeleteView.as_view(), name='vehiculo_delete'),
+    path(route="<int:id>/update/", view=VehiculoUpdateView.as_view(), name='vehiculo_update'),
 
-    path(route="<int:vehiculo_id>/comentarios/", view=comentario_lista, name='comentario_lista'),
-    path(route="<int:vehiculo_id>/comentarios/create/", view=comentario_create, name='comentario_create'),
-    path(route="<int:comentario_id>/comentarios/update/", view=comentario_update, name='comentario_update'),
-    path(route="comentario/<int:id>/delete/", view=comentario_delete, name='comentario_delete'),
+    path(route="<int:vehiculo_id>/comentarios/", view=ComentarioListaView.as_view(), name='comentario_lista'),
+    path(route="<int:vehiculo_id>/comentarios/create/", view=ComentarioCreateView.as_view(), name='comentario_create'),
+    path(route="<int:comentario_id>/comentarios/update/", view=ComentarioUpdateView.as_view(), name='comentario_update'),
+    path(route="comentario/<int:id>/delete/", view=ComentarioDeleteView.as_view(), name='comentario_delete'),
     path(route="vehiculo_images", view=VehiculoImageView.as_view(), name='vehiculo_images'),
 ]

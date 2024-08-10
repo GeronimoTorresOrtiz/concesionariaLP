@@ -1,21 +1,21 @@
-from django.shortcuts import redirect, render
-
-from vehiculos.models import Marca
+from django.shortcuts import render
+from django.views import View
 from vehiculos.repositories.marca import MarcaRepository
 
 repo = MarcaRepository()
 
-def marca_lista(request):
-    marca = repo.get_all()
-    return render(
-        request,
-        'vehiculos/create.html',
-        dict(
-            marcas= marca
+class MarcaListaView(View):
+    def get(self, request):
+        marcas = repo.get_all()
+        return render(
+            request,
+            'vehiculos/create.html',
+            {'marcas': marcas}
         )
-    )
 
-def index_view(request):
-    return render(
-        request,
-        'index/index.html'    )
+class IndexView(View):
+    def get(self, request):
+        return render(
+            request,
+            'index/index.html'
+        )

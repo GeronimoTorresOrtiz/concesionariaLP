@@ -2,6 +2,8 @@
 {% block content %}
 <div class="container mt-3">
     <h2>Lista de vehículos</h2>
+    <p>Hora actual: <span id="current-time">{{ current_time }}</span></p>  <!-- Muestra la hora actual -->
+
     <a href="{% url 'vehiculo_create' %}" class="btn btn-danger btn-sm">Crear</a>                    
 
     <table class="table table-striped">
@@ -32,11 +34,24 @@
                     <a href="{% url 'vehiculo_delete' vehiculo.id %}" class="btn btn-danger btn-sm">Eliminar</a>
                     <a href="{% url 'comentario_lista' vehiculo.id %}" class="btn btn-info btn-sm">Ver Comentarios</a> 
                     <a href="{% url 'comentario_create' vehiculo.id %}" class="btn btn-info btn-sm">Comentar</a> 
-                    
                 </td> 
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
+
+<script>
+    function updateTime() {
+        var now = new Date();
+        var hours = now.getHours().toString().padStart(2, '0');
+        var minutes = now.getMinutes().toString().padStart(2, '0');
+        var seconds = now.getSeconds().toString().padStart(2, '0');
+        var timeString = hours + ':' + minutes + ':' + seconds;
+        document.getElementById('current-time').textContent = timeString;
+    }
+
+    setInterval(updateTime, 1000);
+    updateTime();
+</script>
 {% endblock %}

@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from vehiculos.models import Vehiculo, Comentario
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
+from vehiculos.models import Vehiculo, Comentario  
 from vehiculos.forms import ComentarioForm
 from vehiculos.repositories.comentario import ComentarioRepository
 from vehiculos.repositories.vehiculo import VehiculoRepository
@@ -8,29 +9,38 @@ from vehiculos.repositories.vehiculo import VehiculoRepository
 comentario_repo = ComentarioRepository()
 vehiculo_repo = VehiculoRepository()
 
-def comentario_lista(request, vehiculo_id):
-    vehiculo = get_object_or_404(vehiculo_repo.get_all(), id=vehiculo_id)
-    comentarios = comentario_repo.get_all().filter(vehiculo=vehiculo)
+class ComentarioListaView(View):
+    def get(self, request, vehiculo_id):
+        vehiculo = get_object_or_404(vehiculo_repo.get_all(), id=vehiculo_id)
+        comentarios = comentario_repo.get_all().filter(vehiculo=vehiculo)
 
-    if request.user.is_authenticated and not request.user.is_staff:
-         comentarios = comentario_repo.filter(autor=request.user)
+        if request.user.is_authenticated and not request.user.is_staff:
+            comentarios = comentario_repo.filter(autor=request.user)
 
-    return render(
-        request,
-        'comentarios/list.html',
-        {
-            'vehiculo': vehiculo,
-            'comentarios': comentarios
-        }
-    )
+        return render(
+            request,
+            'comentarios/list.html',
+            {
+                'vehiculo': vehiculo,
+                'comentarios': comentarios
+            }
+        )
 
-@login_required
-def comentario_create(request, vehiculo_id):
-    vehiculo = get_object_or_404(Vehiculo, id=vehiculo_id)
+class ComentarioCreateView(LoginRequiredMixin, View):
+    login_url = 'login'
+    
+    def get(self, request, vehiculo_id):
+        form = ComentarioForm()
+        vehiculo = get_object_or_404(Vehiculo, id=vehiculo_id)
+        return render(
+            request,
+            'comentarios/create.html',
+            {'form': form, 'vehiculo': vehiculo}
+        )
 
-    if request.method == 'POST':
-      
+    def post(self, request, vehiculo_id):
         form = ComentarioForm(request.POST)
+        vehiculo = get_object_or_404(Vehiculo, id=vehiculo_id)
         if form.is_valid():
             try:
                 comentario_repo.create(
@@ -39,56 +49,50 @@ def comentario_create(request, vehiculo_id):
                     contenido=form.cleaned_data['contenido'],
                     calificacion=form.cleaned_data['calificacion']
                 )
-                # Redirigir a la lista de comentarios
                 return redirect('comentario_lista', vehiculo_id=vehiculo_id)
             except Exception as e:
                 form.add_error(None, f"Ocurrió un error al guardar el comentario: {e}")
-    else:
-        # Instanciar un formulario vacío
-        form = ComentarioForm()
+        return render(
+            request,
+            'comentarios/create.html',
+            {'form': form, 'vehiculo': vehiculo}
+        )
 
-    # Renderizar la plantilla con el formulario y el vehículo asociado
-    return render(
-        request,
-        'comentarios/create.html',
-        {
-            'form': form,
-            'vehiculo': vehiculo
-        }
-    )
+class ComentarioUpdateView(LoginRequiredMixin, View):
+    login_url = 'login'
+    
+    def get(self, request, comentario_id):
+        comentario = get_object_or_404(Comentario, id=comentario_id)
+        form = ComentarioForm(instance=comentario)
+        return render(
+            request,
+            'comentarios/update.html',
+            {'form': form, 'comentario': comentario}
+        )
 
-@login_required
-def comentario_update(request, comentario_id):
-    comentario = get_object_or_404(Comentario, id=comentario_id)
-
-    if request.method == 'POST':
+    def post(self, request, comentario_id):
+        comentario = get_object_or_404(Comentario, id=comentario_id)
         form = ComentarioForm(request.POST, instance=comentario)
         if form.is_valid():
             comentario_repo.update(
                 comentario=comentario,
-                autor=request.user,  # Assuming the author is the currently logged-in user
+                autor=request.user,
                 vehiculo=comentario.vehiculo,
                 contenido=form.cleaned_data['contenido'],
                 calificacion=form.cleaned_data['calificacion']
             )
             return redirect('comentario_lista', vehiculo_id=comentario.vehiculo.id)
-    else:
-        form = ComentarioForm(instance=comentario)
+        return render(
+            request,
+            'comentarios/update.html',
+            {'form': form, 'comentario': comentario}
+        )
 
-    return render(
-        request,
-        'comentarios/update.html',
-        {
-            'form': form,
-            'comentario': comentario
-        }
-    )
-
-@login_required
-def comentario_delete(request, id):
-    comentario = get_object_or_404(Comentario, id=id)
-    vehiculo_id = comentario.vehiculo.id 
-    if request.method == 'POST':
+class ComentarioDeleteView(LoginRequiredMixin, View):
+    login_url = 'login'
+    
+    def post(self, request, id):
+        comentario = get_object_or_404(Comentario, id=id)
+        vehiculo_id = comentario.vehiculo.id
         comentario_repo.delete(comentario)
         return redirect('comentario_lista', vehiculo_id=vehiculo_id)
-    return redirect('comentario_lista', vehiculo_id=vehiculo_id)

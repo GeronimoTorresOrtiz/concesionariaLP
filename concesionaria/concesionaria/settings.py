@@ -57,21 +57,29 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'concesionaria.urls'
 
+import os
+# settings.py
+SITE_NAME = 'Mi Proyecto Django'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.csrf',
                 'django.contrib.messages.context_processors.messages',
+                'vehiculos.context_processors.site_context',  # Nombre de módulo correcto
             ],
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'concesionaria.wsgi.application'
 
