@@ -1,52 +1,68 @@
 {% extends "home/base.html" %}
 {% block content %}
-<div class="container mt-3">
-    <h2>Lista de vehículos</h2>
-    <p>Hora actual: <span id="current-time">{{ current_time }}</span></p>  <!-- Muestra la hora actual -->
+<div class="container mt-5">
+    <!-- Fondo estilizado y contenedor -->
+    <div class="bg-white p-4 rounded-lg shadow-lg">
+        <!-- Título y hora actual -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="display-4 text-dark font-weight-bold">🚗 Inventario de Vehículos</h1>
+            <p class="text-muted">🕒 Hora actual: <span id="current-time" class="font-weight-bold h4">{{ current_time }}</span></p>
+        </div>
+        
+        <!-- Botón de creación y selector de marca -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="{% url 'vehiculo_create' %}" class="btn btn-primary btn-lg shadow-sm">➕ Añadir Vehículo</a>
+            
+            <!-- Selector de marca con JavaScript para filtrado -->
+            <div class="form-group mb-0 w-50">
+                <select name="brand" id="brand-select" class="form-control" onchange="filterVehicles()">
+                    <option value="">🎯 Filtrar por Marca</option>
+                    {% for marca in lista_marcas %}
+                        <option value="{{ marca.id }}" {% if marca.id == selected_brand_id %}selected{% endif %}>{{ marca.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
 
-    <a href="{% url 'vehiculo_create' %}" class="btn btn-danger btn-sm">Crear</a>  
-    
-    <!-- Selector de marca con JavaScript para filtrado -->
-    <select name="brand" id="brand-select" onchange="filterVehicles()">
-        <option value="">Selecciona una marca</option>
-        {% for marca in lista_marcas %}
-            <option value="{{ marca.id }}" {% if marca.id == selected_brand_id %}selected{% endif %}>{{ marca.name }}</option>
-        {% endfor %}
-    </select>                  
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Marca</th>
-                <th>Modelo</th>
-                <th>Puertas</th>
-                <th>Cilindrada</th>
-                <th>Combustible</th>
-                <th>País de fabricación</th>
-                <th>Precio USD</th>
-                <th>Acciones</th> 
-            </tr>
-        </thead>
-        <tbody>
-            {% for vehiculo in vehicles %}
-            <tr>
-                <td>{{ vehiculo.marca.name }}</td>
-                <td>{{ vehiculo.modelo.name }}</td>
-                <td>{{ vehiculo.cant_puertas }}</td>
-                <td>{{ vehiculo.cilindrada }}</td>
-                <td>{{ vehiculo.combustible.name }}</td>
-                <td>{{ vehiculo.pais_fabricacion.name }}</td>
-                <td>{{ vehiculo.precio_en_dolares }}</td>
-                <td>
-                    <a href="{% url 'vehiculo_update' vehiculo.id %}" class="btn btn-warning btn-sm">Editar</a>
-                    <a href="{% url 'vehiculo_delete' vehiculo.id %}" class="btn btn-danger btn-sm">Eliminar</a>
-                    <a href="{% url 'comentario_lista' vehiculo.id %}" class="btn btn-info btn-sm">Ver Comentarios</a> 
-                    <a href="{% url 'comentario_create' vehiculo.id %}" class="btn btn-info btn-sm">Comentar</a> 
-                </td> 
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        <!-- Tabla de vehículos -->
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered shadow-sm">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Marca</th>
+                        <th scope="col">Modelo</th>
+                        <th scope="col">Puertas</th>
+                        <th scope="col">Cilindrada</th>
+                        <th scope="col">Combustible</th>
+                        <th scope="col">País de Fabricación</th>
+                        <th scope="col">Precio (USD)</th>
+                        <th scope="col">Acciones</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for vehiculo in vehicles %}
+                    <tr>
+                        <td>{{ vehiculo.marca.name }}</td>
+                        <td>{{ vehiculo.modelo.name }}</td>
+                        <td>{{ vehiculo.cant_puertas }}</td>
+                        <td>{{ vehiculo.cilindrada }}</td>
+                        <td>{{ vehiculo.combustible.name }}</td>
+                        <td>{{ vehiculo.pais_fabricacion.name }}</td>
+                        <td>{{ vehiculo.precio_en_dolares|floatformat:2 }}</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a href="{% url 'vehiculo_update' vehiculo.id %}" class="btn btn-warning btn-sm">✏️ Editar</a>
+                                <a href="{% url 'vehiculo_delete' vehiculo.id %}" class="btn btn-danger btn-sm">🗑️ Eliminar</a>
+                                <a href="{% url 'comentario_lista' vehiculo.id %}" class="btn btn-info btn-sm">💬 Comentarios</a> 
+                                <a href="{% url 'comentario_create' vehiculo.id %}" class="btn btn-primary btn-sm">📝 Comentar</a> 
+                            </div>
+                        </td> 
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <script>
