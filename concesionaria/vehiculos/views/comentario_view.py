@@ -12,10 +12,13 @@ vehiculo_repo = VehiculoRepository()
 class ComentarioListaView(View):
     def get(self, request, vehiculo_id):
         vehiculo = get_object_or_404(vehiculo_repo.get_all(), id=vehiculo_id)
+        
+        # Filtra comentarios por vehículo
         comentarios = comentario_repo.get_all().filter(vehiculo=vehiculo)
 
+        # Si el usuario está autenticado y no es staff, solo muestra comentarios del propio usuario
         if request.user.is_authenticated and not request.user.is_staff:
-            comentarios = comentario_repo.filter(autor=request.user)
+            comentarios = comentarios.filter(author=request.user)  # Usar 'author' en lugar de 'autor'
 
         return render(
             request,

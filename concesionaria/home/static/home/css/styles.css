@@ -37,7 +37,7 @@ body, .navbar {
 }
 
 .bg-image {
-    background-image: url('/static/home/images/pexels-vladalex94-1402787.jpg');
+    background-image: url('/static/home/images/amarok.jpg');
     height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la ventana */
     background-size: cover;
     background-position: center;
@@ -47,7 +47,8 @@ body, .navbar {
     font-size: 2rem; /* Ajusta el tamaño de la fuente a un valor más razonable */
     padding: 30px;
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.5); /* Opcional: agrega un fondo semi-transparente para mejorar la legibilidad */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para mejorar la legibilidad */
+    font-family: 'Bebas Neue', sans-serif; /* Aplica Bebas Neue a los textos en la caja */
 }
 
 .lead {
