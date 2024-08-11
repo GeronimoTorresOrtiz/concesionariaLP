@@ -12,20 +12,17 @@
                     <form method="post">
                         {% csrf_token %}
                         <div class="mb-3">
-                            <label for="id_author" class="form-label">Autor</label>
-                            <input type="text" name="author" id="id_author" class="form-control" value="{{ form.author.value }}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="id_fecha_creacion" class="form-label">Fecha de Creación</label>
-                            <input type="date" name="fecha_creacion" id="id_fecha_creacion" class="form-control" value="{{ form.fecha_creacion.value }}">
-                        </div>
-                        <div class="mb-3">
                             <label for="id_calificacion" class="form-label">Calificación</label>
-                            <input type="number" name="calificacion" id="id_calificacion" class="form-control" step="1" value="{{ form.calificacion.value }}">
+                            <select name="calificacion" id="id_calificacion" class="form-control">
+                                <option value="">Seleccione una calificación</option>
+                                {% for i in "12345" %}
+                                    <option value="{{ i }}" {% if form.calificacion.value == i %}selected{% endif %}>{{ i }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="id_contenido" class="form-label">Contenido</label>
-                            <textarea name="contenido" id="id_contenido" class="form-control">{{ form.contenido.value }}</textarea>
+                            <textarea name="contenido" id="id_contenido" class="form-control" placeholder="Escriba su comentario aquí...">{% if form.contenido.value %}{{ form.contenido.value }}{% endif %}</textarea>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Guardar Cambios</button>
                     </form>

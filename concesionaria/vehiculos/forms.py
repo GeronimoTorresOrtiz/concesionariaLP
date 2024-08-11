@@ -1,5 +1,5 @@
 from django import forms
-from .models import Vehiculo, Marca, Modelo, Combustible, Pais, Comentario, VehiculoImage
+from .models import Vehiculo, Comentario, VehiculoImage
 
 class VehiculoForm(forms.ModelForm):
     class Meta:
