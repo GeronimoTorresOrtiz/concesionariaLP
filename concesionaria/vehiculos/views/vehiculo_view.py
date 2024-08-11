@@ -4,8 +4,8 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from datetime import datetime
 
-
-from vehiculos.forms import VehiculoForm
+from vehiculos.forms import VehiculoForm, VehiculoImageForm
+from vehiculos.models import VehiculoImage
 from vehiculos.repositories.vehiculo import VehiculoRepository
 from vehiculos.repositories.marca import MarcaRepository
 from vehiculos.repositories.modelo import ModeloRepository
@@ -114,17 +114,19 @@ class VehiculoUpdateView(View):
     def get(self, request, id):
         vehiculo = get_object_or_404(vehiculo_repo.get_all(), id=id)
         form = VehiculoForm(instance=vehiculo)
-        
+        image_form = VehiculoImageForm()
+
         marcas = marca_repo.get_all()
         modelos = modelo_repo.get_all()
         combustibles = combustible_repo.get_all()
         paises = pais_repo.get_all()
-        
+
         return render(
             request,
             'vehiculos/update.html',
             {
                 'form': form,
+                'image_form': image_form,
                 'marcas': marcas,
                 'modelos': modelos,
                 'combustibles': combustibles,
@@ -135,40 +137,29 @@ class VehiculoUpdateView(View):
     def post(self, request, id):
         vehiculo = get_object_or_404(vehiculo_repo.get_all(), id=id)
         form = VehiculoForm(request.POST, instance=vehiculo)
-        
+        image_form = VehiculoImageForm(request.POST, request.FILES)
+
         if form.is_valid():
-            marca_id = form.cleaned_data['marca'].id
-            modelo_id = form.cleaned_data['modelo'].id
-            combustible_id = form.cleaned_data['combustible'].id
-            pais_id = form.cleaned_data['pais_fabricacion'].id
+            vehiculo = form.save()
 
-            marca = marca_repo.get_by_id(marca_id)
-            modelo = modelo_repo.get_by_id(modelo_id)
-            combustible = combustible_repo.get_by_id(combustible_id)
-            pais_fabricacion = pais_repo.get_by_id(pais_id)
+            if image_form.is_valid():
+                vehiculo_image = image_form.save(commit=False)
+                vehiculo_image.vehiculo = vehiculo
+                vehiculo_image.save()
 
-            vehiculo_nuevo = vehiculo_repo.update(
-                vehiculo=vehiculo,
-                marca=marca,
-                modelo=modelo,
-                cant_puertas=form.cleaned_data['cant_puertas'],
-                cilindrada=form.cleaned_data['cilindrada'],
-                combustible=combustible,
-                pais_f=pais_fabricacion,
-                precio=form.cleaned_data['precio_en_dolares'],
-            )
             return redirect('vehiculo_lista')
-        
+
         marcas = marca_repo.get_all()
         modelos = modelo_repo.get_all()
         combustibles = combustible_repo.get_all()
         paises = pais_repo.get_all()
-        
+
         return render(
             request,
             'vehiculos/update.html',
             {
                 'form': form,
+                'image_form': image_form,
                 'marcas': marcas,
                 'modelos': modelos,
                 'combustibles': combustibles,
