@@ -1,4 +1,4 @@
-{% extends "home/base.html" %}
+{% extends "home/base.html" %} 
 {% block content %}
 <div class="container mt-5">
     <!-- Fondo estilizado y contenedor -->
@@ -60,11 +60,33 @@
                                 {% endif %}
                                 <a href="{% url 'comentario_lista' vehiculo.id %}" class="btn btn-info btn-sm">💬 Comentarios</a> 
                                 <a href="{% url 'comentario_create' vehiculo.id %}" class="btn btn-primary btn-sm">📝 Comentar</a> 
+                                <!-- Botón para ver imagen -->
+                                {% if vehiculo.imagenes.exists and vehiculo.imagenes.first.image %}
+                                    <button type="button" class="btn btn-secondary btn-sm" onclick="showImageModal('{{ vehiculo.imagenes.first.image.url }}')">🖼️ Ver Imagen</button>
+                                {% else %}
+                                    <button type="button" class="btn btn-secondary btn-sm" disabled>🖼️ Sin Imagen</button>
+                                {% endif %}
                             </div>
                         </td>                        
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para mostrar la imagen -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Imagen del Vehículo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="vehicleImage" src="" class="img-fluid" alt="Imagen del Vehículo">
+            </div>
         </div>
     </div>
 </div>
@@ -85,6 +107,12 @@
         var seconds = now.getSeconds().toString().padStart(2, '0');
         var timeString = hours + ':' + minutes + ':' + seconds;
         document.getElementById('current-time').textContent = timeString;
+    }
+
+    function showImageModal(imageUrl) {
+        document.getElementById('vehicleImage').src = imageUrl;
+        var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+        imageModal.show();
     }
 
     setInterval(updateTime, 1000);
