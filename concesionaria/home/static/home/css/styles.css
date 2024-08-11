@@ -1,0 +1,59 @@
+/* Estilos personalizados */
+body, .navbar {
+    font-family: 'Poppins', sans-serif;
+}
+
+.navbar {
+    background-color: #111; /* Negro */
+}
+
+.navbar-brand {
+    color: #FFD700; /* Amarillo dorado */
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.navbar-brand:hover,
+.navbar-brand:focus,
+.navbar-brand:active {
+    color: #FFD700 !important; /* Mantener amarillo dorado */
+}
+
+.nav-link {
+    color: #FFFFFF; /* Blanco */
+    font-weight: 600; /* Peso de fuente semi-negrita */
+}
+
+.nav-link:hover,
+.nav-link:focus,
+.nav-link:active {
+    color: #FFD700 !important; /* Amarillo dorado */
+}
+
+.nav-link.active {
+    color: #FFC107; /* Amarillo suave */
+    background-color: #333; /* Gris oscuro */
+    border-radius: 0.5rem;
+}
+
+.bg-image {
+    background-image: url('/static/home/images/pexels-vladalex94-1402787.jpg');
+    height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la ventana */
+    background-size: cover;
+    background-position: center;
+}
+
+.fondo {
+    font-size: 2rem; /* Ajusta el tamaño de la fuente a un valor más razonable */
+    padding: 30px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.5); /* Opcional: agrega un fondo semi-transparente para mejorar la legibilidad */
+}
+
+.lead {
+    font-size: 2.5rem; /* Ajusta el tamaño de la fuente */
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+}

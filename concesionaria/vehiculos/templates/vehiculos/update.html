@@ -1,62 +1,94 @@
 {% extends "home/base.html" %}
+
 {% block content %}
-<div class="container mt-3">
-    <h2>Actualizar Vehículo</h2>
-    <form method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <label>Marca</label>
-            <select name="marca" class="form-control">
-                {% for marca in marcas %}
-                    <option value="{{ marca.id }}" {% if marca.id == form.instance.marca.id %} selected {% endif %}>
-                        {{ marca.name }}
-                    </option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Modelo</label>
-            <select name="modelo" class="form-control">
-                {% for modelo in modelos %}
-                    <option value="{{ modelo.id }}" {% if modelo.id == form.instance.modelo.id %} selected {% endif %}>
-                        {{ modelo.name }}
-                    </option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Cantidad de puertas</label>
-            <input type="number" step="1" name="cant_puertas" class="form-control" value="{{ form.instance.cant_puertas }}" required>
-        </div>
-        <div class="form-group">
-            <label>Cilindrada</label>
-            <input type="number" step="0.01" name="cilindrada" class="form-control" value="{{ form.instance.cilindrada }}" required>
-        </div>
-        <div class="form-group">
-            <label>Combustible</label>
-            <select name="combustible" class="form-control">
-                {% for combustible in combustibles %}
-                    <option value="{{ combustible.id }}" {% if combustible.id == form.instance.combustible.id %} selected {% endif %}>
-                        {{ combustible.name }}
-                    </option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group">
-            <label>País de fabricación</label>
-            <select name="pais_fabricacion" class="form-control">
-                {% for pais in paises %}
-                    <option value="{{ pais.id }}" {% if pais.id == form.instance.pais_fabricacion.id %} selected {% endif %}>
-                        {{ pais.name }}
-                    </option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Precio en USD</label>
-            <input type="number" step="0.01" name="precio_en_dolares" class="form-control" value="{{ form.instance.precio_en_dolares }}" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Actualizar</button>
-    </form>
+<div class="container mt-5">
+    <div class="bg-white p-4 rounded-lg shadow-lg">
+        <h2 class="text-dark font-weight-bold mb-4">Actualizar Vehículo</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="id_marca" class="form-label">Marca</label>
+                    <select name="marca" id="id_marca" class="form-control">
+                        {% for marca in marcas %}
+                            <option value="{{ marca.id }}" {% if marca.id == form.instance.marca.id %} selected {% endif %}>
+                                {{ marca.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="id_modelo" class="form-label">Modelo</label>
+                    <select name="modelo" id="id_modelo" class="form-control">
+                        {% for modelo in modelos %}
+                            <option value="{{ modelo.id }}" {% if modelo.id == form.instance.modelo.id %} selected {% endif %}>
+                                {{ modelo.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="id_cant_puertas" class="form-label">Cantidad de puertas</label>
+                    <input type="number" step="1" name="cant_puertas" id="id_cant_puertas" class="form-control" value="{{ form.instance.cant_puertas }}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="id_cilindrada" class="form-label">Cilindrada</label>
+                    <input type="number" step="0.01" name="cilindrada" id="id_cilindrada" class="form-control" value="{{ form.instance.cilindrada }}" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="id_combustible" class="form-label">Combustible</label>
+                    <select name="combustible" id="id_combustible" class="form-control">
+                        {% for combustible in combustibles %}
+                            <option value="{{ combustible.id }}" {% if combustible.id == form.instance.combustible.id %} selected {% endif %}>
+                                {{ combustible.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="id_pais_fabricacion" class="form-label">País de fabricación</label>
+                    <select name="pais_fabricacion" id="id_pais_fabricacion" class="form-control">
+                        {% for pais in paises %}
+                            <option value="{{ pais.id }}" {% if pais.id == form.instance.pais_fabricacion.id %} selected {% endif %}>
+                                {{ pais.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="id_precio_en_dolares" class="form-label">Precio en USD</label>
+                    <input type="number" step="0.01" name="precio_en_dolares" id="id_precio_en_dolares" class="form-control" value="{{ form.instance.precio_en_dolares }}" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Actualizar</button>
+        </form>
+    </div>
 </div>
 {% endblock %}
+
+<style>
+    .bg-white {
+        background-color: #ffffff;
+    }
+    .form-label {
+        font-weight: 600;
+        color: #495057;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+    .shadow-lg {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+</style>

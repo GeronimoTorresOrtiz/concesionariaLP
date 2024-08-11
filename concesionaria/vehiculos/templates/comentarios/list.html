@@ -1,47 +1,75 @@
 {% extends "home/base.html" %}
+
 {% block content %}
-<div class="container mt-3">
-    <h2>Comentarios de {{ vehiculo.marca }} {{ vehiculo.modelo }}</h2>
+<div class="container mt-5">
+    <div class="bg-white p-4 rounded-lg shadow-lg">
+        <h2 class="text-dark font-weight-bold mb-4">Comentarios de {{ vehiculo.marca }} {{ vehiculo.modelo }}</h2>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Autor</th>
-                <th>Fecha</th>
-                <th>Calificación</th>
-                <th>Contenido</th>
-                {% if user.is_authenticated %}
-                <th>Acciones</th>
-                {% endif %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for comentario in comentarios %}
-            <tr>
-                <td>{{ comentario.author }}</td>
-                <td>{{ comentario.fecha_creacion }}</td>
-                <td>{{ comentario.calificacion }}</td>
-                <td>{{ comentario.contenido }}</td>
-                <td>
-                    <form action="{% url 'comentario_delete' comentario.id %}" method="post" style="display:inline;">
-                        {% csrf_token %}
-                        {% if user.is_authenticated %}
-                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                            {% if not user.is_staff or comentario.author == user %}                              
-                                    <a href="{% url 'comentario_update' comentario.id %}" class="btn btn-warning btn-sm">Editar</a>
+        <table class="table table-hover table-striped shadow-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th>Autor</th>
+                    <th>Fecha</th>
+                    <th>Calificación</th>
+                    <th>Contenido</th>
+                    {% if user.is_authenticated %}
+                    <th>Acciones</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for comentario in comentarios %}
+                <tr>
+                    <td>{{ comentario.author }}</td>
+                    <td>{{ comentario.fecha_creacion }}</td>
+                    <td>{{ comentario.calificacion }}</td>
+                    <td>{{ comentario.contenido }}</td>
+                    {% if user.is_authenticated %}
+                    <td>
+                        <form action="{% url 'comentario_delete' comentario.id %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            {% if not user.is_staff or comentario.author == user %}
+                                <a href="{% url 'comentario_update' comentario.id %}" class="btn btn-warning btn-sm">Editar</a>
                             {% endif %}
-                        {% endif %}
-                    </form>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="5">No hay comentarios para este vehículo.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="{% if user.is_authenticated %}5{% else %}4{% endif %}" class="text-center">No hay comentarios para este vehículo.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{% url 'vehiculo_lista' %}" class="btn btn-primary">Volver a la lista de vehículos</a>
+        <a href="{% url 'vehiculo_lista' %}" class="btn btn-primary w-100 mt-4">Volver a la lista de vehículos</a>
+    </div>
 </div>
 {% endblock %}
+
+<style>
+    .table {
+        margin-bottom: 0;
+    }
+    .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+    .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+    }
+    .btn-warning:hover {
+        background-color: #e0a800;
+        border-color: #d39e00;
+    }
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+</style>
