@@ -10,6 +10,7 @@ from django.views import View
 from usuarios.forms import UserRegisterForm
 
 
+
 class LoginView(View):
     def get(self, request):
         return render(
@@ -27,6 +28,8 @@ class LoginView(View):
             )
             if user:
                 login(request,user)
+                return redirect('index')
+            else :
                 return redirect('index')
         return render(request, 'home/login.html')
     
@@ -66,7 +69,11 @@ class RegisterView(View):
         )
 
 
-@login_required(login_url='login')
+def about_us(request):
+    return render(request, 'home/sobre_nosotros.html')
+
+
+
 def index_view(request):
     return render(
         request,

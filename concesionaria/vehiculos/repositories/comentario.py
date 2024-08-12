@@ -22,13 +22,13 @@ class ComentarioRepository:
         queryset = Comentario.objects.all()
 
         if vehiculo is not None:
-            queryset = queryset.filter(vehiculo=vehiculo)  # Usamos 'exact' implícitamente
+            queryset = queryset.filter(vehiculo=vehiculo)  
         
         if autor is not None:
-            queryset = queryset.filter(author=autor)  # Usamos 'exact' para el autor
+            queryset = queryset.filter(author=autor)  
         
         if calificacion is not None:
-            queryset = queryset.filter(calificacion=calificacion)  # Usamos 'exact' implícitamente
+            queryset = queryset.filter(calificacion=calificacion)  
         
         return list(queryset)
 

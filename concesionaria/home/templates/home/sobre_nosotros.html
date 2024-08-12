@@ -1,0 +1,46 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+
+{% block content %}
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Sobre Nosotros</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{% static 'home/images/about_us.jpg' %}" alt="Concesionaria" class="img-fluid rounded">
+            </div>
+            <div class="col-md-6">
+                <p>
+                    Bienvenido a Concesionaria Salvador Dalí, su destino principal para encontrar los mejores vehículos a los precios más competitivos. Con años de experiencia en el mercado automotriz, nos hemos consolidado como una referencia en la industria, ofreciendo una amplia gama de automóviles que se adaptan a las necesidades y gustos de cada cliente.
+                </p>
+                <p>
+                    En Concesionaria Salvador Dalí, nuestra misión es proporcionar una experiencia de compra única, basada en la confianza, la transparencia y el compromiso con la calidad. Nos enorgullecemos de nuestro equipo de profesionales apasionados que están siempre listos para ayudarle a encontrar el vehículo perfecto.
+                </p>
+                <p>
+                    Visítenos en nuestras instalaciones, donde podrá explorar nuestra selección de vehículos nuevos y usados, o navegue por nuestro sitio web para obtener más información sobre nuestras ofertas y servicios.
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+<style>
+    .bg-white {
+        background-color: #ffffff;
+    }
+    .form-label {
+        font-weight: 600;
+        color: #495057;
+    }
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+    .btn-success:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+    .shadow-lg {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+</style>

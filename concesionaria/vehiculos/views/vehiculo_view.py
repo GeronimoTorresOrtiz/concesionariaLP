@@ -20,7 +20,6 @@ pais_repo = PaisRepository()
 
 class VehiculoListaView(View):
     def get(self, request):
-        # Obtener el parámetro de marca de la solicitud
         marca_id = request.GET.get('brand')
         
         # Si se proporciona un ID de marca, filtrar los vehículos por marca
@@ -29,7 +28,6 @@ class VehiculoListaView(View):
         else:
             vehiculos = vehiculo_repo.get_all()
 
-        # Obtener la lista de marcas para el dropdown
         marcas = marca_repo.get_all()
 
         return render(
@@ -37,8 +35,8 @@ class VehiculoListaView(View):
             'vehiculos/list.html',
             {
                 'vehicles': vehiculos,
-                'lista_marcas': marcas,  # Pasa la lista de marcas al template
-                'current_time': datetime.now().strftime('%H:%M:%S')  # Si usas context processors, no es necesario
+                'lista_marcas': marcas,  
+                'current_time': datetime.now().strftime('%H:%M:%S')
             }
         )
 
