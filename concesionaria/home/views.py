@@ -8,29 +8,25 @@ from django.shortcuts import redirect, render
 from django.views import View
 
 from usuarios.forms import UserRegisterForm
-
+from django.contrib import messages 
 
 
 class LoginView(View):
     def get(self, request):
-        return render(
-            request,
-            'home/login.html'
-        )
+        return render(request, 'home/login.html')
+
     def post(self, request):
-        username=request.POST.get('username')
-        password=request.POST.get('password')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
         if username and password:
-            user = authenticate(
-                request,
-                username=username,
-                password=password
-            )
+            user = authenticate(request, username=username, password=password)
             if user:
-                login(request,user)
+                login(request, user)
                 return redirect('index')
-            else :
-                return redirect('index')
+            else:
+                messages.warning(request, 'Nombre de usuario o contraseña incorrectos.')
+
         return render(request, 'home/login.html')
     
 

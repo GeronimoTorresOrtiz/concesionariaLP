@@ -92,6 +92,13 @@
                         <div class="text-center mt-3">
                             <a href="{% url 'register' %}" class="btn btn-link">¿No tienes cuenta? Regístrate aquí</a>
                         </div>
+                        {% if messages %}
+                         {% for message in messages %}
+                             <div class="alert alert-warning" role="alert">
+                              {{ message }}
+                            </div>
+                         {% endfor %}
+                        {% endif %}
                     </div>
                     <div class="card-footer text-center">
                         <small>&copy; {{ current_year }} Concesionaria Salvador Dalí. Todos los derechos reservados.</small>
