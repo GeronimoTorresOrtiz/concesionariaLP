@@ -18,7 +18,7 @@ class ComentarioListaView(View):
 
         # Si el usuario está autenticado y no es staff, solo muestra comentarios del propio usuario
         if request.user.is_authenticated and not request.user.is_staff:
-            comentarios = comentarios.filter(author=request.user)  # Usar 'author' en lugar de 'autor'
+            comentarios = comentarios.filter(author=request.user) 
 
         return render(
             request,

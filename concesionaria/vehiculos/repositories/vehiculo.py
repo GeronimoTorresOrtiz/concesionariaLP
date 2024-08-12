@@ -1,4 +1,3 @@
-# vehiculos/repositories/vehiculo.py
 from typing import List, Optional
 from vehiculos.models import Vehiculo, Marca, Pais, Combustible, Modelo
 

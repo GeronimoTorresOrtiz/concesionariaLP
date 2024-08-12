@@ -27,14 +27,12 @@
                     {% if user.is_authenticated %}
                     <td>
                         {% if user == comentario.author %}
-                            <!-- El autor del comentario puede editarlo y eliminarlo -->
                             <a href="{% url 'comentario_update' comentario.id %}" class="btn btn-warning btn-sm">Editar</a>
                             <form action="{% url 'comentario_delete' comentario.id %}" method="post" style="display:inline;">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                             </form>
                         {% elif user.is_superuser or user.is_staff %}
-                            <!-- Superusuarios y staff pueden eliminar cualquier comentario -->
                             <form action="{% url 'comentario_delete' comentario.id %}" method="post" style="display:inline;">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
