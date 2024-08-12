@@ -12,7 +12,12 @@ Este proyecto es una aplicación web desarrollada en Django que permite gestiona
 
 - **Autenticación y Seguridad**: Se implementa un sistema de autenticación robusto que incluye registro y login de usuarios. Las vistas críticas están protegidas, permitiendo el acceso solo a usuarios autenticados y restringiendo acciones según el rol del usuario.
 
-- **Comentarios y Moderación**: Los usuarios pueden comentar sobre los vehículos. Los comentarios pueden ser revisados por el personal de la concesionaria, quien tiene la capacidad de eliminarlos si es necesario, aunque no pueden editarlos. Esto garantiza que el contenido publicado en la plataforma se mantenga relevante y respetuoso.
+- **Comentarios y Moderación**: Los usuarios pueden comentar sobre los vehículos. Los comentarios pueden ser revisados por el personal de la concesionaria, quien tiene la capacidad de eliminarlos si es necesario, aun[text](recent:/604bc532c87909765eb7b91166b964a6)que no pueden editarlos. Esto garantiza que el contenido publicado en la plataforma se mantenga relevante y respetuoso.
+
+- **Proyecto**:
+![Pagina Principal](./home/static/home/pagina_inicio.jpeg)
+![Vista imagen vehiculo](./home/static/home/imagen_vehiculo.jpeg)
+
 
 ### Tecnologías Utilizadas
 
@@ -35,11 +40,11 @@ Este proyecto representa una solución completa para la gestión de una concesio
 
 1. Clona el repositorio en la carpeta deseada:
     ```bash
-    git clone <URL>
+    git clone git@github.com:GeronimoTorresOrtiz/concesionariaLP.git
     ```
 2. Ingresa a la carpeta del proyecto:
     ```bash
-    cd nombre_carpeta
+    cd concesionariaLP
     ```
 3. Crea un entorno virtual:
     ```bash
@@ -52,16 +57,24 @@ Este proyecto representa una solución completa para la gestión de una concesio
 5. Instala las dependencias necesarias:
     ```bash
     pip install -r requirements.txt
-    ```
-6. Realiza las migraciones para crear las tablas de la base de datos:
+    ``` 
+6. Ingresa a la carpeta del proyecto:
     ```bash
-    python manage.py migrate
+    cd concesionaria
     ```
-7. Carga los datos iniciales en la base de datos:
+7. Realiza las migraciones para crear las tablas de la base de datos:
     ```bash
-    python manage.py load_data
+    python3 manage.py migrate
     ```
-8. Inicia el servidor de desarrollo:
+8. Carga los datos iniciales en la base de datos:
     ```bash
-    python manage.py runserver
+    python3 manage.py load_data
     ```
+9. Crea un superusuario para entrar al admin:
+    ```bash
+    python3 manage.py createsuperuser --username <nombre de tu usuario>
+    ```    
+10. Inicia el servidor de desarrollo:
+    ```bash
+    python3 manage.py runserver
+    ``` 
