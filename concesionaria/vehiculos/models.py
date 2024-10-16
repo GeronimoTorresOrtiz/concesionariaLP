@@ -82,7 +82,8 @@ class VehiculoImage(models.Model):
         on_delete=models.CASCADE,
         related_name='imagenes'
     )
-    image = models.ImageField(upload_to='vehiculo_images/' ,null=True)
+    image = models.ImageField()
+    ruta_imagen = models.CharField(max_length=200, default= None, null=True)
     
 
     def __str__(self):

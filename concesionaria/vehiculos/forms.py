@@ -19,7 +19,9 @@ class ComentarioForm(forms.ModelForm):
 class VehiculoImageForm(forms.ModelForm):
     class Meta:
         model = VehiculoImage
-        fields = ['image']
+        fields = [
+            'vehiculo', 
+            'image',]
         widgets = {
             'image': forms.ClearableFileInput(attrs={'class': 'form-control  custom-class'}),
         }

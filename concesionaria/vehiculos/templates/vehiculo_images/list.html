@@ -6,8 +6,9 @@
                 <div class="card-body">
                     <h5 class="card-title">{{image.vehiculo.marca}} {{ image.vehiculo.modelo}}</h5>
                 </div>
-                <img src="{{image.image.url}}" class="card-img-bottom" alt="Nombre del Vehículo">
+                <img src="https://itec-tercero.s3.sa-east-1.amazonaws.com/imagen_vehiculo_{{image.id}}" class="card-img-bottom" alt="Nombre del Vehículo">
             </div>
         </div>
-    {% endfor %}
+    {% endfor %} 
+
 {% endblock %}

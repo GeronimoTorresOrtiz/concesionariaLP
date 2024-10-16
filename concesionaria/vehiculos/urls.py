@@ -11,7 +11,10 @@ from vehiculos.views.comentario_view import (
     ComentarioCreateView,
     ComentarioUpdateView,
 )
-from vehiculos.views.vehiculo_image_view import VehiculoImageView
+from vehiculos.views.vehiculo_image_view import (
+    VehiculoImageView,
+    VehiculoImageListView,
+)
 
 urlpatterns = [
     path(route="", view=VehiculoListaView.as_view(), name='vehiculo_lista'),
@@ -24,4 +27,8 @@ urlpatterns = [
     path(route="<int:comentario_id>/comentarios/update/", view=ComentarioUpdateView.as_view(), name='comentario_update'),
     path(route="comentario/<int:id>/delete/", view=ComentarioDeleteView.as_view(), name='comentario_delete'),
     path(route="vehiculo_images", view=VehiculoImageView.as_view(), name='vehiculo_images'),
+    path(route="vehiculo_images/upload/", view=VehiculoImageView.as_view(), name='vehiculo_images'),
+    path(route="vehiculo_images/list/", view=VehiculoImageListView.as_view(), name='images_list'),
+
+
 ]
