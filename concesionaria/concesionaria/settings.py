@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-qg=lh%cdjww55k(6kjb%8@iwm0*ut)py5%wjya$&epf)cureib'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,10 +40,21 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
+]
+
+SELF_APPS = [
     'vehiculos',
     'usuarios',
     'home',
+    'api_v1',
 ]
+
+EXTERNAL_APPS = [ 
+     'rest_framework',
+]
+
+INSTALLED_APPS += SELF_APPS + EXTERNAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -151,4 +162,5 @@ sentry_sdk.init(
     # of sampled transactions.
     # We recommend adjusting this value in production.
     profiles_sample_rate=1.0,
+
 )
