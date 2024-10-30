@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-qg=lh%cdjww55k(6kjb%8@iwm0*ut)py5%wjya$&epf)cureib'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -164,3 +164,8 @@ sentry_sdk.init(
     profiles_sample_rate=1.0,
 
 )
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PAGINATION_CLASS': 'api_v1.paginations.MiPaginador',
+#     'PAGE_SIZE':15
+# }
