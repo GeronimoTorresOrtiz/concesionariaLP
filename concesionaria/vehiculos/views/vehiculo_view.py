@@ -11,6 +11,16 @@ from vehiculos.repositories.marca import MarcaRepository
 from vehiculos.repositories.modelo import ModeloRepository
 from vehiculos.repositories.combustible import CombustibleRepository
 from vehiculos.repositories.pais import PaisRepository
+from usuarios.models import Profile
+from django.utils.translation import (
+    activate,
+    get_language,
+    gettext_lazy as _,
+    deactivate
+)
+
+
+
 
 vehiculo_repo = VehiculoRepository()
 marca_repo = MarcaRepository()
@@ -20,7 +30,12 @@ pais_repo = PaisRepository()
 
 class VehiculoListaView(View):
     def get(self, request):
+        if not request.user.is_anonymous:
+            profile= Profile.objects.get(user=request.user)
+            lang = profile.language
+            activate(lang)
         marca_id = request.GET.get('brand')
+
         
         # Si se proporciona un ID de marca, filtrar los vehículos por marca
         if marca_id:
@@ -36,7 +51,8 @@ class VehiculoListaView(View):
             {
                 'vehicles': vehiculos,
                 'lista_marcas': marcas,  
-                'current_time': datetime.now().strftime('%H:%M:%S')
+                'current_time': datetime.now().strftime('%H:%M:%S'),
+
             }
         )
 

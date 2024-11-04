@@ -1,25 +1,26 @@
 {% extends "home/base.html" %} 
 {% block content %}
+{% load i18n %}
 <div class="container mt-5">
     <!-- Fondo estilizado y contenedor -->
     <div class="bg-white p-4 rounded-lg shadow-lg">
         <!-- Título y hora actual -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="display-4 text-dark font-weight-bold">🚗 Inventario de Vehículos</h1>
-            <p class="text-muted">🕒 Hora actual: <span id="current-time" class="font-weight-bold h4">{{ current_time }}</span></p>
+            <h1 class="display-4 text-dark font-weight-bold">🚗 {% trans "Inventario de Vehículos" %}</h1>
+            <p class="text-muted">🕒 {% trans "Hora actual:" %} <span id="current-time" class="font-weight-bold h4">{{ current_time }}</span></p>
         </div>
         
         <!-- Botón de creación y selector de marca -->
         {% if user.is_superuser or user.is_staff %}
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <a href="{% url 'vehiculo_create' %}" class="btn btn-primary btn-lg shadow-sm">➕ Añadir Vehículo</a>
-            <a href="{% url 'vehiculo_images' %}" class="btn btn-primary btn-lg shadow-sm">➕ Agregar Imagen</a>
-            <a href="{% url 'images_list' %}" class="btn btn-primary btn-lg shadow-sm">➕ Catalogo</a>
-            {% endif %}
+            <a href="{% url 'vehiculo_create' %}" class="btn btn-primary btn-lg shadow-sm">➕ {% trans "Añadir Vehículo" %}</a>
+            <a href="{% url 'vehiculo_images' %}" class="btn btn-primary btn-lg shadow-sm">➕ {% trans "Agregar Imagen" %}</a>
+            <a href="{% url 'images_list' %}" class="btn btn-primary btn-lg shadow-sm">➕ {% trans "Catalogo" %}</a>
+        {% endif %}
             <!-- Selector de marca con JavaScript para filtrado -->
             <div class="form-group mb-0 w-50">
                 <select name="brand" id="brand-select" class="form-control" onchange="filterVehicles()">
-                    <option value="">🎯 Filtrar por Marca</option>
+                    <option value="🎯 ">{% trans "Filtrar por Marca" %}</option>
                     {% for marca in lista_marcas %}
                         <option value="{{ marca.id }}" {% if marca.id == selected_brand_id %}selected{% endif %}>{{ marca.name }}</option>
                     {% endfor %}
@@ -32,14 +33,14 @@
             <table class="table table-hover table-bordered shadow-sm">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">Marca</th>
-                        <th scope="col">Modelo</th>
-                        <th scope="col">Puertas</th>
-                        <th scope="col">Cilindrada</th>
-                        <th scope="col">Combustible</th>
-                        <th scope="col">País de Fabricación</th>
-                        <th scope="col">Precio (USD)</th>
-                        <th scope="col">Acciones</th> 
+                        <th scope="col">{% trans "Marca" %}</th>
+                        <th scope="col">{% trans "Modelo" %}</th>
+                        <th scope="col">{% trans "Puertas" %}</th>
+                        <th scope="col">{% trans "Cilindrada" %}</th>
+                        <th scope="col">{% trans "Combustible" %}</th>
+                        <th scope="col">{% trans "País de Fabricación" %}</th>
+                        <th scope="col">{% trans "Precio (USD)" %}</th>
+                        <th scope="col">{% trans "Acciones" %}</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -56,17 +57,17 @@
                             <div class="btn-group" role="group">
                                 {% if user.is_authenticated %}
                                     {% if user.is_superuser or user.is_staff %}
-                                        <a href="{% url 'vehiculo_update' vehiculo.id %}" class="btn btn-warning btn-sm">✏️ Editar</a>
-                                        <a href="{% url 'vehiculo_delete' vehiculo.id %}" class="btn btn-danger btn-sm">🗑️ Eliminar</a>
+                                        <a href="{% url 'vehiculo_update' vehiculo.id %}" class="btn btn-warning btn-sm">✏️ {% trans "Editar" %}</a>
+                                        <a href="{% url 'vehiculo_delete' vehiculo.id %}" class="btn btn-danger btn-sm">🗑️ {% trans "Eliminar" %}</a>
                                     {% endif %}
                                 {% endif %}
-                                <a href="{% url 'comentario_lista' vehiculo.id %}" class="btn btn-info btn-sm">💬 Comentarios</a> 
-                                <a href="{% url 'comentario_create' vehiculo.id %}" class="btn btn-primary btn-sm">📝 Comentar</a> 
+                                <a href="{% url 'comentario_lista' vehiculo.id %}" class="btn btn-info btn-sm">💬 {% trans "Comentarios" %}</a> 
+                                <a href="{% url 'comentario_create' vehiculo.id %}" class="btn btn-primary btn-sm">📝 {% trans "Comentar" %}</a> 
                                 <!-- Botón para ver imagen -->
                                 {% if vehiculo.imagenes.exists and vehiculo.imagenes.first.image %}
-                                    <button type="button" class="btn btn-secondary btn-sm" onclick="showImageModal('{{ vehiculo.imagenes.first.image.url }}')">🖼️ Ver Imagen</button>
+                                    <button type="button" class="btn btn-secondary btn-sm" onclick="showImageModal('{{ vehiculo.imagenes.first.image.url }}')">🖼️ {% trans "Ver Imagen" %}</button>
                                 {% else %}
-                                    <a href="{% url 'vehiculo_images' %}"  type="button" class="btn btn-secondary btn-sm" disabled>🖼️ Cargar imagen</a>
+                                    <a href="{% url 'vehiculo_images' %}"  type="button" class="btn btn-secondary btn-sm" disabled>🖼️ {% trans "Cargar imagen" %}</a>
                                 {% endif %}
                             </div>
                         </td>                        
@@ -83,11 +84,11 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="imageModalLabel">Imagen del Vehículo</h5>
+                <h5 class="modal-title" id="imageModalLabel">{% trans "Imagen del Vehículo" %}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <img id="vehicleImage" src="" class="img-fluid" alt="Imagen del Vehículo">
+                <img id="vehicleImage" src="" class="img-fluid" alt="{% trans 'Imagen del Vehículo' %}">
             </div>
         </div>
     </div>

@@ -3,6 +3,14 @@ import datetime
 
 from vehiculos.models import Marca
 
+from usuarios.models import  Profile
+
+
+def profile(request):
+    return dict(
+        profile= Profile.objects.get(user=request.user)
+    )
+
 def lista_marcas_context(request):
     marcas = Marca.objects.all()
     return {
@@ -20,3 +28,4 @@ def site_context(request):
         'current_year': now.year,
         'current_time': time_now, 
     }
+

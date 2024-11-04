@@ -86,7 +86,8 @@ TEMPLATES = [
                 'django.template.context_processors.csrf',
                 'django.contrib.messages.context_processors.messages',
                 'vehiculos.context_processors.site_context',
-                'vehiculos.context_processors.lista_marcas_context'  # Nombre de módulo correcto
+                'vehiculos.context_processors.lista_marcas_context',
+                'vehiculos.context_processors.profile',
             ],
         },
     },
@@ -129,13 +130,26 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
+from django.utils.translation import gettext_lazy as _
+
+
 LANGUAGE_CODE = 'es'
+
+LANGUAGES = (
+    ('en', _('English')),
+    ('es', _('Español')),
+)
 
 TIME_ZONE = 'GMT'
 
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
+
+import os
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale')
+]
 
 
 # Static files (CSS, JavaScript, Images)

@@ -9,7 +9,7 @@ from django.views import View
 
 from usuarios.forms import UserRegisterForm
 from django.contrib import messages 
-
+from usuarios.models import Profile
 
 class LoginView(View):
     def get(self, request):
@@ -29,6 +29,8 @@ class LoginView(View):
 
         return render(request, 'home/login.html')
     
+
+
 
 class LogoutView(View):
     def get(self, request):
@@ -68,7 +70,16 @@ class RegisterView(View):
 def about_us(request):
     return render(request, 'home/sobre_nosotros.html')
 
-
+class UpdateLang(View):
+    def get(self, request):
+        profile= Profile.objects.get(user=request.user)
+        lang= profile.language
+        if lang =='es':
+            profile.language= 'en'
+        if lang=='en':
+            profile.language = 'es'
+        profile.save()
+        return redirect(request.META.get('HTTP_REFERER', 'index'))
 
 def index_view(request):
     return render(

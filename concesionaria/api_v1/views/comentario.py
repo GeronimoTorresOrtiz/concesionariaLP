@@ -3,22 +3,22 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.filters import SearchFilter
 
-from api_v1.serializers.vehiculo_serializer import VehiculoSerializer
-from vehiculos.models import Vehiculo, Marca, Pais, Combustible, Modelo
+from api_v1.serializers.comentario_serializer import ComentarioSerializer
+from django.contrib.auth.models import User
+from vehiculos.models import Comentario, Vehiculo
 
 
-class VehiculoViewSet(ModelViewSet): 
-    queryset = Vehiculo.objects.all()
-    serializer_class = VehiculoSerializer
-    #filter_backends = [SearchFilter]
-    #search_fields = ['marca__name']
+class ComentarioViewSet(ModelViewSet): 
+    queryset = Comentario.objects.all()
+    serializer_class = ComentarioSerializer
 
     def get_queryset(self):
         queryset = super().get_queryset() 
-        marca = self.request.query_params.get('marca')
-        if marca:
-            queryset = queryset.filter(marca__name=marca)
+        vehiculo = self.request.query_params.get('vehiculo')
+        if vehiculo:
+            queryset = queryset.filter(vehiculo_id=vehiculo)
         return queryset
+
 
     def create(self, request, *args, **kwargs):
 
