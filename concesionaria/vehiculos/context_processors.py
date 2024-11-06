@@ -5,11 +5,14 @@ from vehiculos.models import Marca
 
 from usuarios.models import  Profile
 
-
 def profile(request):
-    return dict(
-        profile= Profile.objects.get(user=request.user)
-    )
+    user_profile = None
+    if request.user.is_authenticated:  # Verifica si el usuario está autenticado
+        try:
+            user_profile = Profile.objects.get(user=request.user)
+        except Profile.DoesNotExist:
+            user_profile = None  # En caso de que no exista un perfil para el usuario
+    return {'profile': user_profile}
 
 def lista_marcas_context(request):
     marcas = Marca.objects.all()
