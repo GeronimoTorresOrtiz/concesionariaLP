@@ -39,8 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-
+    
 ]
 
 SELF_APPS = [
@@ -52,6 +51,7 @@ SELF_APPS = [
 
 EXTERNAL_APPS = [ 
      'rest_framework',
+     'drf_yasg',
 ]
 
 INSTALLED_APPS += SELF_APPS + EXTERNAL_APPS
@@ -183,3 +183,15 @@ sentry_sdk.init(
 #     'DEFAULT_PAGINATION_CLASS': 'api_v1.paginations.MiPaginador',
 #     'PAGE_SIZE':15
 # }
+# Configuración de Swagger
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': None,
+    'USE_SESSION_AUTH': False,
+    'LOGIN_URL': None,
+    'LOGOUT_URL': None,
+    'DEFAULT_INFO': 'concesionaria.urls.schema_view',
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+}

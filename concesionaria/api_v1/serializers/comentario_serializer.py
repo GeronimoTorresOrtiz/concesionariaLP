@@ -7,9 +7,9 @@ from .vehiculo_serializer import VehiculoSerializer
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model= User
-        fields = ["username"]
-
+        model = User  # o el modelo correspondiente
+        fields = '__all__'
+        ref_name = 'ComentarioUserSerializer'  # Nombre único
 class ComentarioSerializer(serializers.ModelSerializer):
     author = UserSerializer()
     vehiculo = VehiculoSerializer()
