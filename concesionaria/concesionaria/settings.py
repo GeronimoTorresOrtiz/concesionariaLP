@@ -39,12 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+    'usuarios.apps.UsuariosConfig', 
 ]
 
 SELF_APPS = [
     'vehiculos',
-    'usuarios',
+    
     'home',
     'api_v1',
 ]
