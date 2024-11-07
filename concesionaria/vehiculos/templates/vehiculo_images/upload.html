@@ -1,8 +1,41 @@
 {% extends "home/base.html" %}
+
 {% block content %}
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit">Guardar imagen</button>
-    </form>
+<div class="container mt-5">
+    <div class="bg-white p-4 rounded-lg shadow-lg">
+        <h2 class="text-dark font-weight-bold mb-4">Guardar Imagen</h2>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="row">
+                <div class="col-12 mb-3">
+                    {{ form.as_p }}
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-success w-100">Guardar Imagen</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
+
+<style>
+    .bg-white {
+        background-color: #ffffff;
+    }
+    .form-label {
+        font-weight: 600;
+        color: #495057;
+    }
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+    .btn-success:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+    .shadow-lg {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+</style>
