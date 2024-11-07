@@ -54,14 +54,15 @@ Este proyecto representa una solución completa para la gestión de una concesio
     ```bash
     source env/bin/activate
     ```
-5. Instala las dependencias necesarias:
-    ```bash
-    pip install -r requirements.txt
-    ``` 
 6. Ingresa a la carpeta del proyecto:
     ```bash
     cd concesionaria
     ```
+5. Instala las dependencias necesarias:
+    ```bash
+    pip install -r requirements.txt
+    ``` 
+
 7. Realiza las migraciones para crear las tablas de la base de datos:
     ```bash
     python3 manage.py migrate
