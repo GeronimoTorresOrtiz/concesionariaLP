@@ -54,11 +54,11 @@ Este proyecto representa una solución completa para la gestión de una concesio
     ```bash
     source env/bin/activate
     ```
-6. Ingresa a la carpeta del proyecto:
+5. Ingresa a la carpeta del proyecto:
     ```bash
     cd concesionaria
     ```
-5. Instala las dependencias necesarias:
+6. Instala las dependencias necesarias:
     ```bash
     pip install -r requirements.txt
     ``` 
@@ -79,4 +79,8 @@ Este proyecto representa una solución completa para la gestión de una concesio
 10. Inicia el servidor de desarrollo:
     ```bash
     python3 manage.py runserver
+    ``` 
+11. Compilar idiomas
+    ```bash
+    django-admin compilemessages
     ``` 
