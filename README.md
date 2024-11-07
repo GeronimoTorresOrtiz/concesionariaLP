@@ -84,3 +84,9 @@ Este proyecto representa una solución completa para la gestión de una concesio
     ```bash
     django-admin compilemessages
     ``` 
+
+
+### Documentacion de la API
+
+-Para acceder a la informacion que retorna cada endpoint debe ingresar a:
+http://127.0.0.1:8000/swagger/
