@@ -73,7 +73,8 @@ Este proyecto representa una solución completa para la gestión de una concesio
 9. Crea un superusuario para entrar al admin:
     ```bash
     python3 manage.py createsuperuser --username <nombre de tu usuario>
-    ```    
+    ``` 
+       
 10. Inicia el servidor de desarrollo:
     ```bash
     python3 manage.py runserver
